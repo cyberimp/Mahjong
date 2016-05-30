@@ -6,13 +6,6 @@ using UnityEngine;
 
 namespace Mahjong
 {
-    public enum Suit
-    {
-        manzu,
-        pinzu,
-        souzu,
-        yakuhai
-    }
 
     public class Tile:IComparable
     {
@@ -116,7 +109,7 @@ namespace Mahjong
 
         public bool IsHonor()
         {
-            return (suit == Suit.yakuhai);
+            return (suit == Suit.wind || suit == Suit.dragon);
         }
 
         public bool IsNumeric()
@@ -131,14 +124,14 @@ namespace Mahjong
 
         public bool IsGreen()
         {
-            if (suit != Suit.souzu && suit != Suit.yakuhai)
+            if (suit != Suit.souzu && suit != Suit.dragon)
                 return false;
             else
             {
                 if (suit == Suit.souzu &&
                     (value == 2 || value == 3 || value == 4 || value == 6 || value == 8))
                     return true;
-                if (suit == Suit.yakuhai && value == 6)
+                if (suit == Suit.dragon && value == 2)
                     return true;
                 return false;
 
@@ -162,30 +155,38 @@ namespace Mahjong
                     path += "bamboo/bamboo";
                     path += value.ToString();
                     break;
-                case Suit.yakuhai:
-                    path += "yakuhai/";
+                case Suit.wind:
+                    path += "wind/wind-";
                     switch (value)
                     {
                         case 1:
-                            path += "wind-east";
+                            path += "east";
                             break;
                         case 2:
-                            path += "wind-south";
+                            path += "south";
                             break;
                         case 3:
-                            path += "wind-west";
+                            path += "west";
                             break;
                         case 4:
-                            path += "wind-north";
+                            path += "north";
                             break;
-                        case 5:
-                            path += "dragon-haku";
+                        default:
+                            throw (new ArgumentOutOfRangeException("I do not know this wind"));
+                    }
+                    break;
+                case Suit.dragon:
+                    path += "dragon/dragon-";
+                    switch (value)
+                    {
+                        case 1:
+                            path += "haku";
                             break;
-                        case 6:
-                            path += "dragon-green";
+                        case 2:
+                            path += "green";
                             break;
-                        case 7:
-                            path += "dragon-chun";
+                        case 3:
+                            path += "chun";
                             break;
                         default:
                             throw (new ArgumentOutOfRangeException("I do not know this dragin"));
@@ -196,6 +197,19 @@ namespace Mahjong
             }
             Sprite pic = Resources.Load<Sprite>(path);
             return pic;
+        }
+
+        public Tile DoraBonus()
+        {
+            return this;
+        }
+
+        public int GetDoras(Tile[] indicators)
+        {
+            int numDoras = 0;
+            if (value == 10)
+                numDoras++;
+            return numDoras;
         }
     }
 }

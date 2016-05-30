@@ -9,12 +9,10 @@ public class TileController : MonoBehaviour {
 
     private Tile value;
 
-    private Image face;
 
 
 	// Use this for initialization
 	void Start () {
-        face = GetComponent<Image>();
 	
 	}
 	
