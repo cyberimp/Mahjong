@@ -138,6 +138,77 @@ namespace Mahjong
             }
         }
 
+        public override string ToString()
+        {
+            string result = "";
+            if (IsNumeric())
+            {
+                if (value == 10)
+                    result = "aka 5";
+                else
+                    result = value.ToString();
+                switch (suit)
+                {
+                    case Suit.manzu:
+                        result += " man";
+                        break;
+                    case Suit.pinzu:
+                        result += " pin";
+                        break;
+                    case Suit.souzu:
+                        result += " sou";
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                if (suit == Suit.dragon)
+                {
+                    switch (value)
+                    {
+                        case 1:
+                            result = "white";
+                            break;
+                        case 2:
+                            result = "red";
+                            break;
+                        case 3:
+                            result = "green";
+                            break;
+                        default:
+                            break;
+                    }
+                    result += " dragon";
+                }
+                else
+                {
+                    switch (value)
+                    {
+                        case 1:
+                            result = "east";
+                            break;
+                        case 2:
+                            result = "south";
+                            break;
+                        case 3:
+                            result = "west";
+                            break;
+                        case 4:
+                            result = "north";
+                            break;
+                        default:
+                            break;
+                    }
+                    result += " wind";
+
+                }
+
+            }
+            return result;
+        }
+
         //should be in Unity part
         public Sprite LoadImage()
         {
