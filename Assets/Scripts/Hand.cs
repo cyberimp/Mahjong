@@ -7,7 +7,11 @@ namespace Mahjong
 {
     class Hand
     {
-        private Array collection;
-
+        private List<Tile> collection;
+        private List<Meld> melds;
+        public void GetFromWall(Wall wall)
+        {
+            collection.Add(wall.GetTile());
+        }
     }
 }

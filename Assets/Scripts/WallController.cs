@@ -9,6 +9,8 @@ using System.Collections.Generic;
 public class WallController : MonoBehaviour {
 
     private Wall wall;
+    [SerializeField]
+    private bool showDeadOnly;
 
     // Use this for initialization
     void Start () {

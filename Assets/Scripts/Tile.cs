@@ -138,6 +138,7 @@ namespace Mahjong
             }
         }
 
+        //should be in Unity part
         public Sprite LoadImage()
         {
             string path = "Tiles/";
@@ -201,7 +202,49 @@ namespace Mahjong
 
         public Tile DoraBonus()
         {
-            return this;
+            return NextTile(true);
+        }
+
+        public Tile NextTile(bool wrap = false)
+        {
+            int result = 1;
+            if (suit == Suit.manzu || suit == Suit.pinzu || suit == Suit.souzu)
+            {
+                switch (value)
+                {
+                    case 10:
+                        result = 6;
+                        break;
+                    case 9:
+                        if (!wrap)
+                            return null;
+                        result = 1;
+                        break;
+                    default:
+                        result = value + 1;
+                        break;
+                }
+            }
+            if (suit == Suit.dragon)
+            {
+                if (!wrap)
+                    return null;
+                if (value == 3)
+                    result = 1;
+                else
+                    result = value + 1;
+            }
+            if (suit == Suit.wind)
+            {
+                if (!wrap)
+                    return null;
+                if (value == 4)
+                    result = 1;
+                else
+                    result = value + 1;
+            }
+            return new Tile(result, this.suit);
+
         }
 
         public int GetDoras(Tile[] indicators)
@@ -209,6 +252,11 @@ namespace Mahjong
             int numDoras = 0;
             if (value == 10)
                 numDoras++;
+            foreach (Tile item in indicators)
+            {
+                if (item.DoraBonus().Equals(this))
+                    numDoras++;
+            }
             return numDoras;
         }
     }
