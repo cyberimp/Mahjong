@@ -24,6 +24,11 @@ namespace Mahjong
             collection.Add(wall.GetTile());
         }
 
+        public void Sort()
+        {
+            collection.Sort();
+        }
+
         public Tile GetTile(int index)
         {
             return collection[index];
@@ -52,6 +57,9 @@ namespace Mahjong
                 else
                     result.Clear();
             }
+
+
+
             return result.ToArray();
         }
     }

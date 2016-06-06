@@ -19,15 +19,21 @@ public class HandController : MonoBehaviour {
     Text wait;
 
 	// Use this for initialization
-	IEnumerator Start () {
+	void Start () {
         GameObject tile;
-        hand = new Hand();
-        yield return new WaitForSeconds(0.1f);
-        for (int i = 0; i < 13; i++)
-        {
-            hand.GetFromWall();
-        }
+            hand = new Hand();
+            //yield return new WaitForSeconds(0.1f);
+            for (int i = 0; i < 13; i++)
+            {
+                hand.GetFromWall();
+            }
 
+            Tile[] temp = hand.isTempai();
+            if (temp.GetLength(0) > 0)
+                wait.text = temp[0].ToString();
+            else
+                wait.text = "No wait((((((((";
+        hand.Sort();
 
         for (int i = 0; i < 13; i++)
         {
@@ -35,21 +41,10 @@ public class HandController : MonoBehaviour {
             tile.transform.SetParent(transform, false);
             tile.GetComponent<TileController>().SetTile(hand.GetTile(i));
         }
-        Tile[] temp = hand.isTempai();
-        if (temp.GetLength(0) > 0)
-        {
-            wait.text = temp[0].ToString();
-        }
-        else
-        {
-            wait.text = "No wait((((((((";
-
-        }
-
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update () {
 	
 	}
 }
